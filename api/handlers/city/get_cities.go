@@ -7,15 +7,14 @@ import (
 	"github.com/krymancer/airport-api-go/pkg/common/models"
 )
 
-func (h handler) GetCity(c *gin.Context) {
-	id := c.Param("id")
+func (h handler) GetCities(c *gin.Context) {
 
-	var city models.City
+	var cities []models.City
 
-	if result := h.DB.First(&city, id); result.Error != nil {
+	if result := h.DB.Find(&cities); result.Error != nil {
 		c.AbortWithError(http.StatusNotFound, result.Error)
 		return
 	}
 
-	c.JSON(http.StatusOK, &city)
+	c.JSON(http.StatusOK, &cities)
 }

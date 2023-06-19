@@ -1,24 +1,24 @@
-package city
+package cities
 
 import (
-    "github.com/gin-gonic/gin"
+	"github.com/gin-gonic/gin"
 
-    "gorm.io/gorm"
+	"gorm.io/gorm"
 )
 
 type handler struct {
-    DB *gorm.DB
+	DB *gorm.DB
 }
 
 func RegisterRoutes(r *gin.Engine, db *gorm.DB) {
-    h := &handler{
-        DB: db,
-    }
+	h := &handler{
+		DB: db,
+	}
 
-    routes := r.Group("/cities")
-    routes.POST("/", h.AddCity)
-    routes.GET("/", h.GetCities)
-    routes.GET("/:id", h.GetCity)
-    routes.PUT("/:id", h.UpdateCity)
-    routes.DELETE("/:id", h.DeleteCity)
+	routes := r.Group("/cities")
+	routes.POST("/", h.AddCity)
+	routes.GET("/", h.GetCities)
+	routes.GET("/:id", h.GetCity)
+	routes.PUT("/:id", h.UpdateCity)
+	routes.DELETE("/:id", h.DeleteCity)
 }

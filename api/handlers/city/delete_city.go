@@ -1,4 +1,4 @@
-package airports
+package cities
 
 import (
 	"net/http"
@@ -7,17 +7,17 @@ import (
 	"github.com/krymancer/airport-api-go/pkg/common/models"
 )
 
-func (h handler) DeleteAirport(c *gin.Context) {
+func (h handler) DeleteCity(c *gin.Context) {
 	id := c.Param("id")
 
-	var airport models.Airport
+	var city models.City
 
-	if result := h.DB.First(&airport, id); result.Error != nil {
+	if result := h.DB.First(&city, id); result.Error != nil {
 		c.AbortWithError(http.StatusNotFound, result.Error)
 		return
 	}
 
-	h.DB.Delete(&airport)
+	h.DB.Delete(&city)
 
 	c.Status(http.StatusOK)
 }
