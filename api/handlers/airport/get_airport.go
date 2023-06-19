@@ -1,0 +1,21 @@
+package airports
+
+import (
+    "net/http"
+
+    "github.com/gin-gonic/gin"
+    "github.com/krymancer/airport-api-go/pkg/common/models"
+)
+
+func (h handler) GetAirport(c *gin.Context) {
+    id := c.Param("id")
+
+    var airport models.Airport
+
+    if result := h.DB.First(&airport, id); result.Error != nil {
+        c.AbortWithError(http.StatusNotFound, result.Error)
+        return
+    }
+
+    c.JSON(http.StatusOK, &airport)
+}
