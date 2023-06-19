@@ -1,7 +1,10 @@
 package models
 
+import "gorm.io/gorm"
+
 type Airport struct {
-	Name string `json:"name"`
+	gorm.Model
+	Name     string `json:"name"`
 	IATAcode string `json:"iata_code"`
-	city City `json:"city"`
+	City     City   `json:"city"`
 }
