@@ -21,6 +21,4 @@ make server
 
 ## Technology stack
 
-The API is implemented in Go using the [Gin](github.com/gin-gonic/gin) framework.
-For the database, it uses [PostgreSQL](https://www.postgresql.org/) and [Gorm](https://gorm.io/).
-For managing the environment variables, it uses [Viper](https://github.com/spf13/viper).
+The API is implemented in Go using the [Gin](github.com/gin-gonic/gin) framework, uses [PostgreSQL](https://www.postgresql.org/) and [Gorm](https://gorm.io/) for database and ORM and uses [Viper](https://github.com/spf13/viper) to manage environment variables.
