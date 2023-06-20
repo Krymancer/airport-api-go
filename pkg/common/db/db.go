@@ -16,15 +16,15 @@ func InitDatabase(url string) *gorm.DB {
 	}
 
 	db.AutoMigrate(
+		&models.Manager{},
 		&models.City{},
 		&models.Airport{},
-		&models.FlightClass{},
 		&models.Flight{},
-		&models.Lugagge{},
-		&models.Manager{},
+		&models.FlightClass{},
 		&models.Passenger{},
-		&models.Ticket{},
 		&models.Visitor{},
+		&models.Ticket{},
+		&models.Lugagge{},
 	)
 
 	return db

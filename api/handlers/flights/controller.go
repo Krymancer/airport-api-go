@@ -20,6 +20,6 @@ func RegisterRoutes(r *gin.Engine, db *gorm.DB) {
 	routes.GET("/", h.GetFlights)
 	routes.GET("/:id", h.GetFlight)
 	routes.PUT("/:id", h.UpdateFlight)
-	routes.PUT("/:number/classes/:class/price", h.UpdateClassPrice)
+	routes.PUT("/classes/:class/price/:number", h.UpdateClassPrice)
 	routes.DELETE("/:id", h.DeleteFlight)
 }

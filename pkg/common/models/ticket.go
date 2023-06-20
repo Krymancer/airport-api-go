@@ -9,4 +9,5 @@ type Ticket struct {
 	Lugagge     []Lugagge `json:"lugagge"`
 	FlightID    uint      `json:"flight"`
 	PassengerID uint      `json:"passenger_id"`
+	VisitorID   uint      `json:"visitor_id"`
 }
