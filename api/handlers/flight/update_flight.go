@@ -70,3 +70,38 @@ func (h handler) UpdateFlight(c *gin.Context) {
 
 	c.JSON(http.StatusOK, &flight)
 }
+
+type UpdateFlightClassBodyRequest struct {
+	Price float64 `json:"price" binding:"required"`
+}
+
+func (h handler) UpdateClassPrice(c *gin.Context) {
+	number := c.Param("number")
+	class := c.Param("class")
+
+	body := UpdateFlightClassBodyRequest{}
+
+	if err := c.BindJSON(&body); err != nil {
+		c.AbortWithError(http.StatusBadRequest, err)
+		return
+	}
+
+	var flight models.Flight
+	var flightClass models.FlightClass
+
+	if result := h.DB.First(&flight, number); result.Error != nil {
+		c.AbortWithError(http.StatusNotFound, result.Error)
+		return
+	}
+
+	if result := h.DB.First(&flightClass, class); result.Error != nil {
+		c.AbortWithError(http.StatusNotFound, result.Error)
+		return
+	}
+
+	flightClass.PricePerSeat = body.Price
+
+	h.DB.Save(&flight)
+
+	c.JSON(http.StatusOK, &flight)
+}

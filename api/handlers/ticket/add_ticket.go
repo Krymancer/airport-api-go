@@ -55,3 +55,41 @@ func (h handler) AddTicket(c *gin.Context) {
 
 	c.JSON(http.StatusCreated, &ticket)
 }
+
+type AddLugggageBodyRequest struct {
+	Number int `json:"number"`
+}
+
+func (h handler) AddLuggage(c *gin.Context) {
+	number := c.Param("number")
+
+	body := AddLugggageBodyRequest{}
+
+	if err := c.BindJSON(&body); err != nil {
+		c.AbortWithError(http.StatusBadRequest, err)
+		return
+	}
+
+	var ticket models.Ticket
+
+	if result := h.DB.Where("number = ?", number).First(&ticket); result.Error != nil {
+		c.AbortWithError(http.StatusNotFound, result.Error)
+		return
+	}
+
+	var luggage models.Lugagge
+
+	if result := h.DB.Where("number = ?", body.Number).First(&luggage); result.Error != nil {
+		c.AbortWithError(http.StatusNotFound, result.Error)
+		return
+	}
+
+	ticket.Lugagge = append(ticket.Lugagge, luggage)
+
+	if result := h.DB.Save(&ticket); result.Error != nil {
+		c.AbortWithError(http.StatusBadRequest, result.Error)
+		return
+	}
+
+	c.JSON(http.StatusCreated, &luggage.Number)
+}

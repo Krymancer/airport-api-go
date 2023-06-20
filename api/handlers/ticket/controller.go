@@ -23,4 +23,7 @@ func RegisterRoutes(r *gin.Engine, db *gorm.DB) {
 	routes.GET("/:id", h.GetTicket)
 	routes.PUT("/:id", h.UpdateTicket)
 	routes.DELETE("/:id", h.DeleteTicket)
+	routes.GET("/:number/voucher", h.GetVoucher)
+	routes.POST("/:number/luggage", h.AddLuggage)
+	routes.GET("/:number/luggage/label", h.GetLuaggageLabel)
 }
