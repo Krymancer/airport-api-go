@@ -8,9 +8,9 @@ import (
 )
 
 type AddAirportRequestBody struct {
-	Name     string      `json:"name"`
-	City     models.City `json:"city"`
-	IATACode string      `json:"iata_code"`
+	Name     string `json:"name"`
+	CityID   uint   `json:"city_id"`
+	IATACode string `json:"iata_code"`
 }
 
 func (h handler) AddAirport(c *gin.Context) {
@@ -23,7 +23,7 @@ func (h handler) AddAirport(c *gin.Context) {
 
 	var airport models.Airport
 
-	airport.City = body.City
+	airport.CityID = body.CityID
 	airport.Name = body.Name
 	airport.IATACode = body.IATACode
 

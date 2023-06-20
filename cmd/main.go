@@ -11,7 +11,7 @@ import (
 )
 
 func main() {
-	viper.SetConfigFile("./pkg/common/config/envs/env.env")
+	viper.SetConfigFile("./pkg/common/config/envs/.env")
 	viper.ReadInConfig()
 
 	port := viper.GetString("PORT")

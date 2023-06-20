@@ -7,8 +7,8 @@ type Flight struct {
 	Number        int           `json:"number"`
 	Departure     string        `json:"departure"`
 	Arrival       string        `json:"arrival"`
-	Origin        Airport       `json:"origin"`
-	Destination   Airport       `json:"destination"`
+	OriginID      uint          `json:"origin_id"`
+	DestinationID uint          `json:"destination_id"`
 	FlightClasses []FlightClass `json:"flight_class"`
 	Tickets       []Ticket      `json:"tickets"`
 }

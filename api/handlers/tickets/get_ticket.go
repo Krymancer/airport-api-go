@@ -35,19 +35,43 @@ func (h handler) GetVoucher(c *gin.Context) {
 	number := c.Param("number")
 
 	var ticket models.Ticket
+	var flight models.Flight
+	var origin models.City
+	var destination models.City
+	var passenger models.Passenger
 
 	if result := h.DB.Where("number = ?", number).First(&ticket); result.Error != nil {
 		c.AbortWithError(http.StatusNotFound, result.Error)
 		return
 	}
 
+	if result := h.DB.First(&flight, ticket.FlightID); result.Error != nil {
+		c.AbortWithError(http.StatusNotFound, result.Error)
+		return
+	}
+
+	if result := h.DB.First(&origin, flight.OriginID); result.Error != nil {
+		c.AbortWithError(http.StatusNotFound, result.Error)
+		return
+	}
+
+	if result := h.DB.First(&destination, flight.DestinationID); result.Error != nil {
+		c.AbortWithError(http.StatusNotFound, result.Error)
+		return
+	}
+
+	if result := h.DB.First(&passenger, ticket.PassengerID); result.Error != nil {
+		c.AbortWithError(http.StatusNotFound, result.Error)
+		return
+	}
+
 	voucher := Voucher{
 		TicketNumber:  ticket.Number,
-		FlightNumber:  ticket.Flight.Number,
-		Origin:        ticket.Flight.Origin.City.Name,
-		Destination:   ticket.Flight.Destination.City.Name,
-		PassengerCPF:  ticket.Passenger.CPF,
-		PassengerName: ticket.Passenger.Name,
+		FlightNumber:  flight.Number,
+		Origin:        origin.Name,
+		Destination:   destination.Name,
+		PassengerCPF:  passenger.CPF,
+		PassengerName: passenger.Name,
 		SeatNumber:    ticket.SeatNumber,
 		LuggageCheked: len(ticket.Lugagge) > 0,
 	}

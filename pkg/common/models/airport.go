@@ -6,5 +6,5 @@ type Airport struct {
 	gorm.Model
 	Name     string `json:"name"`
 	IATACode string `json:"iata_code"`
-	City     City   `json:"city"`
+	CityID   uint   `json:"city_id"`
 }

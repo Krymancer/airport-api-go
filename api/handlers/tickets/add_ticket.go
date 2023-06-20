@@ -8,11 +8,11 @@ import (
 )
 
 type AddTicketBodyRequest struct {
-	Number     int              `json:"number"`
-	SeatNumber string           `json:"seat_number"`
-	Lugagge    []models.Lugagge `json:"lugagge"`
-	Flight     models.Flight    `json:"flight"`
-	Passenger  models.Passenger `json:"passenger"`
+	Number      int              `json:"number"`
+	SeatNumber  string           `json:"seat_number"`
+	Lugagge     []models.Lugagge `json:"lugagge"`
+	FlightID    uint             `json:"flight"`
+	PassengerID uint             `json:"passenger"`
 }
 
 func (h handler) AddTicket(c *gin.Context) {
@@ -32,20 +32,20 @@ func (h handler) AddTicket(c *gin.Context) {
 		return
 	}
 
-	if result := h.DB.Where("number = ?", body.Flight.Number).First(&flight); result.Error != nil {
+	if result := h.DB.First(&flight, body.FlightID); result.Error != nil {
 		c.AbortWithError(http.StatusNotFound, result.Error)
 		return
 	}
 
-	if result := h.DB.Where("cpf = ?", body.Passenger.CPF).First(&passenger); result.Error != nil {
+	if result := h.DB.First(&passenger, body.PassengerID); result.Error != nil {
 		c.AbortWithError(http.StatusNotFound, result.Error)
 		return
 	}
 
 	ticket.Number = body.Number
 	ticket.SeatNumber = body.SeatNumber
-	ticket.Passenger = passenger
-	ticket.Flight = flight
+	ticket.PassengerID = passenger.ID
+	ticket.FlightID = flight.ID
 	ticket.Lugagge = body.Lugagge
 
 	if result := h.DB.Create(&ticket); result.Error != nil {

@@ -9,8 +9,8 @@ import (
 )
 
 type UpdateFlightBodyRequest struct {
-	Origin        string               `json:"origin" binding:"required"`
-	Destination   string               `json:"destination" binding:"required"`
+	OriginID      uint                 `json:"origin_id" binding:"required"`
+	DestinationID uint                 `json:"destination_id" binding:"required"`
 	FlightClasses []models.FlightClass `json:"flight_classes" binding:"required"`
 	Number        string               `json:"number" binding:"required"`
 }
@@ -33,21 +33,21 @@ func (h handler) UpdateFlight(c *gin.Context) {
 		return
 	}
 
-	if result := h.DB.Where("IATA_code = ?", body.Origin).First(&origin); result.Error != nil {
+	if result := h.DB.First(&origin, body.OriginID); result.Error != nil {
 		jsonData := []byte(`{"error": "Origin airport not found"}`)
 		c.AbortWithStatusJSON(http.StatusNotFound, jsonData)
 		return
 	}
 
-	flight.Origin = origin
+	flight.OriginID = origin.ID
 
-	if result := h.DB.Where("IATA_code = ?", body.Destination).First(&destination); result.Error != nil {
+	if result := h.DB.First(&destination, body.DestinationID); result.Error != nil {
 		jsonData := []byte(`{"error": "Destination airport not found"}`)
 		c.AbortWithStatusJSON(http.StatusNotFound, jsonData)
 		return
 	}
 
-	flight.Destination = destination
+	flight.DestinationID = destination.ID
 
 	number, err := strconv.Atoi(body.Number)
 

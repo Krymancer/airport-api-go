@@ -8,9 +8,9 @@ import (
 )
 
 type UpdateAirportRequestBody struct {
-	Name     string      `json:"name"`
-	City     models.City `json:"city"`
-	IATACode string      `json:"iata_code"`
+	Name     string `json:"name"`
+	CityID   uint   `json:"city_id"`
+	IATACode string `json:"iata_code"`
 }
 
 func (h handler) UpdateAirport(c *gin.Context) {
@@ -30,7 +30,7 @@ func (h handler) UpdateAirport(c *gin.Context) {
 	}
 
 	airport.Name = body.Name
-	airport.City = body.City
+	airport.CityID = body.CityID
 	airport.IATACode = body.IATACode
 
 	h.DB.Save(&airport)

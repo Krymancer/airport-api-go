@@ -16,8 +16,8 @@ func InitDatabase(url string) *gorm.DB {
 	}
 
 	db.AutoMigrate(
-		&models.Airport{},
 		&models.City{},
+		&models.Airport{},
 		&models.FlightClass{},
 		&models.Flight{},
 		&models.Lugagge{},

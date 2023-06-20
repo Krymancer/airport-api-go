@@ -8,4 +8,5 @@ type FlightClass struct {
 	Type          int     `json:"type"`
 	NumberOfSeats int     `json:"number_of_seats"`
 	PricePerSeat  float64 `json:"price_per_seat"`
+	FlightID      int     `json:"flight_id"`
 }
