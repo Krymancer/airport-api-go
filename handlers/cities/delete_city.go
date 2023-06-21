@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/krymancer/airport-api-go/pkg/common/models"
+	"github.com/krymancer/airport-api-go/models"
 )
 
 // @Summary Delete a city

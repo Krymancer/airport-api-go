@@ -1,9 +1,9 @@
-package db
+package database
 
 import (
 	"log"
 
-	"github.com/krymancer/airport-api-go/pkg/common/models"
+	"github.com/krymancer/airport-api-go/models"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )

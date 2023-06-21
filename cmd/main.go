@@ -6,7 +6,7 @@ import (
 	"github.com/krymancer/airport-api-go/handlers/cities"
 	"github.com/krymancer/airport-api-go/handlers/flights"
 	"github.com/krymancer/airport-api-go/handlers/tickets"
-	"github.com/krymancer/airport-api-go/pkg/common/db"
+	"github.com/krymancer/airport-api-go/internal/database"
 	"github.com/spf13/viper"
 
 	docs "github.com/krymancer/airport-api-go/docs"
@@ -21,31 +21,23 @@ import (
 // @host      localhost:3000
 // @BasePath  /
 func main() {
-	viper.SetConfigFile("./pkg/common/config/envs/.env")
+	viper.SetConfigFile("./config/envs/.env")
 	viper.ReadInConfig()
 
 	port := viper.GetString("PORT")
-	dbUrl := viper.GetString("DB_URL")
+	databaseUrl := viper.GetString("DB_URL")
 
 	docs.SwaggerInfo.BasePath = "/"
 
 	r := gin.Default()
-	h := db.InitDatabase(dbUrl)
+	h := database.InitDatabase(databaseUrl)
 
 	airports.RegisterRoutes(r, h)
 	cities.RegisterRoutes(r, h)
 	flights.RegisterRoutes(r, h)
 	tickets.RegisterRoutes(r, h)
 
-	r.GET("/", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"port":  port,
-			"dbUrl": dbUrl,
-		})
-	})
-
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerfiles.Handler))
 
 	r.Run(port)
-
 }
