@@ -1,0 +1,1350 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "This implements the Airport API Reference.",
+        "title": "Airport API",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {},
+        "version": "1.0"
+    },
+    "host": "localhost:3000",
+    "basePath": "/",
+    "paths": {
+        "/airports": {
+            "get": {
+                "description": "Get a list of all airports",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Airports"
+                ],
+                "summary": "Get all airports",
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieved all airports",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/github_com_krymancer_airport-api-go_pkg_common_models.Airport"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {}
+                    }
+                }
+            },
+            "post": {
+                "description": "Add a new airport to the system",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Airports"
+                ],
+                "summary": "Add a new airport",
+                "parameters": [
+                    {
+                        "description": "Airport details",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/handlers_airports.AddAirportRequestBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_krymancer_airport-api-go_pkg_common_models.Airport"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/airports/{id}": {
+            "get": {
+                "description": "Get details of an airport using its ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Airports"
+                ],
+                "summary": "Get an airport",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Airport ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieved airport",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_krymancer_airport-api-go_pkg_common_models.Airport"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {}
+                    }
+                }
+            },
+            "put": {
+                "description": "Update information of an airport given its ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Airports"
+                ],
+                "summary": "Update airport",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Airport ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Body with updated information",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/handlers_airports.UpdateAirportRequestBody"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully updated airport information",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_krymancer_airport-api-go_pkg_common_models.Airport"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request - Invalid or missing parameters",
+                        "schema": {}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {}
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete an airport from the system using its ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Airports"
+                ],
+                "summary": "Delete an airport",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Airport ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/cities": {
+            "get": {
+                "description": "Get the list of all cities from the database.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Cities"
+                ],
+                "summary": "Retrieve all cities",
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieved all cities",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/github_com_krymancer_airport-api-go_pkg_common_models.City"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No cities found",
+                        "schema": {}
+                    }
+                }
+            },
+            "post": {
+                "description": "Add a new city to the database.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Cities"
+                ],
+                "summary": "Add a new city",
+                "parameters": [
+                    {
+                        "description": "City details",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/handlers_cities.AddCityBodyRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created city object",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_krymancer_airport-api-go_pkg_common_models.City"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad request, JSON decoding failed",
+                        "schema": {}
+                    },
+                    "404": {
+                        "description": "Internal server error when saving the city into the database",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/cities/{id}": {
+            "get": {
+                "description": "Get a specific city from the database by its ID.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Cities"
+                ],
+                "summary": "Retrieve a city by ID",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "City ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieved the city",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_krymancer_airport-api-go_pkg_common_models.City"
+                        }
+                    },
+                    "404": {
+                        "description": "City not found",
+                        "schema": {}
+                    }
+                }
+            },
+            "put": {
+                "description": "Update the details of a specific city in the database by its ID.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Cities"
+                ],
+                "summary": "Update a city's details",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "City ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Name of the city",
+                        "name": "name",
+                        "in": "body",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "description": "State of the city",
+                        "name": "state",
+                        "in": "body",
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully updated the city",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_krymancer_airport-api-go_pkg_common_models.City"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request body",
+                        "schema": {}
+                    },
+                    "404": {
+                        "description": "City not found",
+                        "schema": {}
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete a city from the database.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Cities"
+                ],
+                "summary": "Delete a city",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "City ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "City successfully deleted",
+                        "schema": {}
+                    },
+                    "404": {
+                        "description": "City not found",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/flights": {
+            "get": {
+                "description": "Retrieves all flight records from the database.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Flights"
+                ],
+                "summary": "Get all flights",
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieved all flights",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/github_com_krymancer_airport-api-go_pkg_common_models.Flight"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No flights found",
+                        "schema": {}
+                    }
+                }
+            },
+            "post": {
+                "description": "Add a new flight into the database.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Flights"
+                ],
+                "summary": "Add a new flight",
+                "parameters": [
+                    {
+                        "description": "ID of the origin airport",
+                        "name": "origin_id",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "description": "ID of the destination airport",
+                        "name": "destination_id",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "description": "Array of flight classes. Each element is a FlightClass object.",
+                        "name": "flight_classes",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "array"
+                        }
+                    },
+                    {
+                        "description": "Flight number",
+                        "name": "number",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Successfully added the flight",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_krymancer_airport-api-go_pkg_common_models.Flight"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request body",
+                        "schema": {}
+                    },
+                    "404": {
+                        "description": "Origin/Destination airport not found",
+                        "schema": {}
+                    },
+                    "409": {
+                        "description": "Flight number conflict",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/flights/{id}": {
+            "get": {
+                "description": "Retrieves a flight record from the database based on the provided ID.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Flights"
+                ],
+                "summary": "Get a flight",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Flight ID to get",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieved flight",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_krymancer_airport-api-go_pkg_common_models.Flight"
+                        }
+                    },
+                    "404": {
+                        "description": "Flight not found",
+                        "schema": {}
+                    }
+                }
+            },
+            "put": {
+                "description": "Updates a flight record with the provided data.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Flights"
+                ],
+                "summary": "Update a flight",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Flight ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Body object",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/handlers_flights.UpdateFlightBodyRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully updated flight",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_krymancer_airport-api-go_pkg_common_models.Flight"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {}
+                    },
+                    "404": {
+                        "description": "Flight Not Found",
+                        "schema": {}
+                    },
+                    "409": {
+                        "description": "Conflict with existing flight number",
+                        "schema": {}
+                    }
+                }
+            },
+            "delete": {
+                "description": "Deletes a flight record from the database based on the provided ID.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Flights"
+                ],
+                "summary": "Delete a flight",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Flight ID to delete",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully deleted flight",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_krymancer_airport-api-go_pkg_common_models.Flight"
+                        }
+                    }
+                }
+            }
+        },
+        "/flights/{number}/{class}": {
+            "put": {
+                "description": "Updates the price of a flight class with the provided data.",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Flights"
+                ],
+                "summary": "Update a flight class price",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "Flight Number",
+                        "name": "number",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "description": "Flight Class",
+                        "name": "class",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Body object",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/handlers_flights.UpdateFlightClassBodyRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully updated flight class price",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_krymancer_airport-api-go_pkg_common_models.Flight"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {}
+                    },
+                    "404": {
+                        "description": "Flight or Flight Class Not Found",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/luggageLabel/{number}": {
+            "get": {
+                "description": "Get the luggage label for a specific ticket by number",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Lugagges"
+                ],
+                "summary": "Retrieve a ticket's luggage label",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Ticket number",
+                        "name": "number",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieved luggage label",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/github_com_krymancer_airport-api-go_pkg_common_models.Lugagge"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/tickets": {
+            "get": {
+                "description": "get all tickets",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Tickets"
+                ],
+                "summary": "Get all tickets",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/github_com_krymancer_airport-api-go_pkg_common_models.Ticket"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No tickets found",
+                        "schema": {}
+                    }
+                }
+            },
+            "post": {
+                "description": "Add a new ticket with the provided details",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Tickets"
+                ],
+                "summary": "Add a new ticket",
+                "parameters": [
+                    {
+                        "description": "Add a new ticket",
+                        "name": "AddTicketBodyRequest",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/handlers_tickets.AddTicketBodyRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Successfully created a new ticket",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_krymancer_airport-api-go_pkg_common_models.Ticket"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {}
+                    },
+                    "409": {
+                        "description": "Conflict",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/tickets/cpf/{cpf}": {
+            "get": {
+                "description": "get tickets by passenger's CPF",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Tickets"
+                ],
+                "summary": "Get tickets by CPF",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "CPF",
+                        "name": "cpf",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/github_com_krymancer_airport-api-go_pkg_common_models.Ticket"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "No tickets found",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/tickets/{id}": {
+            "put": {
+                "description": "update ticket by ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Tickets"
+                ],
+                "summary": "Update a ticket",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Ticket ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Ticket details to be updated",
+                        "name": "body",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/handlers_tickets.UpdateTicketBodyRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_krymancer_airport-api-go_pkg_common_models.Ticket"
+                        }
+                    },
+                    "400": {
+                        "description": "Bad Request",
+                        "schema": {}
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {}
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete a ticket by its ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Tickets"
+                ],
+                "summary": "Delete a ticket",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Ticket ID",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully deleted a ticket",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {}
+                    }
+                }
+            }
+        },
+        "/voucher/{number}": {
+            "get": {
+                "description": "Get the voucher details for a specific ticket by number",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Vouchers"
+                ],
+                "summary": "Retrieve a ticket voucher",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "Ticket number",
+                        "name": "number",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successfully retrieved voucher",
+                        "schema": {
+                            "$ref": "#/definitions/handlers_tickets.Voucher"
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "schema": {}
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "github_com_krymancer_airport-api-go_pkg_common_models.Airport": {
+            "type": "object",
+            "properties": {
+                "city_id": {
+                    "type": "integer"
+                },
+                "createdAt": {
+                    "type": "string"
+                },
+                "deletedAt": {
+                    "$ref": "#/definitions/gorm.DeletedAt"
+                },
+                "iata_code": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "updatedAt": {
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_krymancer_airport-api-go_pkg_common_models.City": {
+            "type": "object",
+            "properties": {
+                "airports": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/github_com_krymancer_airport-api-go_pkg_common_models.Airport"
+                    }
+                },
+                "createdAt": {
+                    "type": "string"
+                },
+                "deletedAt": {
+                    "$ref": "#/definitions/gorm.DeletedAt"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "state": {
+                    "type": "string"
+                },
+                "updatedAt": {
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_krymancer_airport-api-go_pkg_common_models.Flight": {
+            "type": "object",
+            "properties": {
+                "arrival": {
+                    "type": "string"
+                },
+                "createdAt": {
+                    "type": "string"
+                },
+                "deletedAt": {
+                    "$ref": "#/definitions/gorm.DeletedAt"
+                },
+                "departure": {
+                    "type": "string"
+                },
+                "destination_id": {
+                    "type": "integer"
+                },
+                "flight_class": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/github_com_krymancer_airport-api-go_pkg_common_models.FlightClass"
+                    }
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "number": {
+                    "type": "integer"
+                },
+                "origin_id": {
+                    "type": "integer"
+                },
+                "tickets": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/github_com_krymancer_airport-api-go_pkg_common_models.Ticket"
+                    }
+                },
+                "updatedAt": {
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_krymancer_airport-api-go_pkg_common_models.FlightClass": {
+            "type": "object",
+            "properties": {
+                "createdAt": {
+                    "type": "string"
+                },
+                "deletedAt": {
+                    "$ref": "#/definitions/gorm.DeletedAt"
+                },
+                "flight_id": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "number_of_seats": {
+                    "type": "integer"
+                },
+                "price_per_seat": {
+                    "type": "number"
+                },
+                "type": {
+                    "type": "integer"
+                },
+                "updatedAt": {
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_krymancer_airport-api-go_pkg_common_models.Lugagge": {
+            "type": "object",
+            "properties": {
+                "createdAt": {
+                    "type": "string"
+                },
+                "deletedAt": {
+                    "$ref": "#/definitions/gorm.DeletedAt"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "number": {
+                    "type": "integer"
+                },
+                "ticket_id": {
+                    "type": "integer"
+                },
+                "updatedAt": {
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_krymancer_airport-api-go_pkg_common_models.Ticket": {
+            "type": "object",
+            "properties": {
+                "createdAt": {
+                    "type": "string"
+                },
+                "deletedAt": {
+                    "$ref": "#/definitions/gorm.DeletedAt"
+                },
+                "flight": {
+                    "type": "integer"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "lugagge": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/github_com_krymancer_airport-api-go_pkg_common_models.Lugagge"
+                    }
+                },
+                "number": {
+                    "type": "integer"
+                },
+                "passenger_id": {
+                    "type": "integer"
+                },
+                "seat_number": {
+                    "type": "string"
+                },
+                "updatedAt": {
+                    "type": "string"
+                },
+                "visitor_id": {
+                    "type": "integer"
+                }
+            }
+        },
+        "gorm.DeletedAt": {
+            "type": "object",
+            "properties": {
+                "time": {
+                    "type": "string"
+                },
+                "valid": {
+                    "description": "Valid is true if Time is not NULL",
+                    "type": "boolean"
+                }
+            }
+        },
+        "handlers_airports.AddAirportRequestBody": {
+            "type": "object",
+            "properties": {
+                "city_id": {
+                    "type": "integer",
+                    "format": "integer",
+                    "example": 1
+                },
+                "iata_code": {
+                    "type": "string",
+                    "format": "string",
+                    "example": "JFK"
+                },
+                "name": {
+                    "type": "string",
+                    "format": "string",
+                    "example": "John F. Kennedy International Airport"
+                }
+            }
+        },
+        "handlers_airports.UpdateAirportRequestBody": {
+            "type": "object",
+            "properties": {
+                "city_id": {
+                    "type": "integer",
+                    "format": "integer",
+                    "example": 1
+                },
+                "iata_code": {
+                    "type": "string",
+                    "format": "string",
+                    "example": "JFK"
+                },
+                "name": {
+                    "type": "string",
+                    "format": "string",
+                    "example": "John F. Kennedy International Airport"
+                }
+            }
+        },
+        "handlers_cities.AddCityBodyRequest": {
+            "type": "object",
+            "properties": {
+                "name": {
+                    "type": "string",
+                    "format": "string",
+                    "example": "New York"
+                },
+                "state": {
+                    "type": "string",
+                    "format": "string",
+                    "example": "NY"
+                }
+            }
+        },
+        "handlers_flights.UpdateFlightBodyRequest": {
+            "type": "object",
+            "required": [
+                "destination_id",
+                "flight_classes",
+                "number",
+                "origin_id"
+            ],
+            "properties": {
+                "destination_id": {
+                    "type": "integer",
+                    "format": "integer",
+                    "example": 2
+                },
+                "flight_classes": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/github_com_krymancer_airport-api-go_pkg_common_models.FlightClass"
+                    }
+                },
+                "number": {
+                    "type": "string",
+                    "format": "string",
+                    "example": "FA123"
+                },
+                "origin_id": {
+                    "type": "integer",
+                    "format": "integer",
+                    "example": 1
+                }
+            }
+        },
+        "handlers_flights.UpdateFlightClassBodyRequest": {
+            "type": "object",
+            "required": [
+                "price"
+            ],
+            "properties": {
+                "price": {
+                    "type": "number",
+                    "format": "float",
+                    "example": 100.5
+                }
+            }
+        },
+        "handlers_tickets.AddTicketBodyRequest": {
+            "type": "object",
+            "properties": {
+                "flight": {
+                    "type": "integer",
+                    "format": "integer",
+                    "example": 123
+                },
+                "lugagge": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/github_com_krymancer_airport-api-go_pkg_common_models.Lugagge"
+                    }
+                },
+                "number": {
+                    "type": "integer",
+                    "format": "integer",
+                    "example": 1
+                },
+                "passenger": {
+                    "type": "integer",
+                    "format": "integer",
+                    "example": 456
+                },
+                "seat_number": {
+                    "type": "string",
+                    "format": "string",
+                    "example": "A1"
+                }
+            }
+        },
+        "handlers_tickets.UpdateTicketBodyRequest": {
+            "type": "object",
+            "properties": {
+                "flight": {
+                    "type": "integer",
+                    "format": "integer",
+                    "example": 123
+                },
+                "lugagge": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/github_com_krymancer_airport-api-go_pkg_common_models.Lugagge"
+                    }
+                },
+                "number": {
+                    "type": "integer",
+                    "format": "integer",
+                    "example": 1
+                },
+                "passenger": {
+                    "type": "integer",
+                    "format": "integer",
+                    "example": 456
+                },
+                "seat_number": {
+                    "type": "string",
+                    "format": "string",
+                    "example": "A1"
+                }
+            }
+        },
+        "handlers_tickets.Voucher": {
+            "type": "object",
+            "properties": {
+                "destination": {
+                    "type": "string",
+                    "format": "string",
+                    "example": "Los Angeles"
+                },
+                "flight_number": {
+                    "type": "integer",
+                    "format": "integer",
+                    "example": 5678
+                },
+                "luggage_checked": {
+                    "type": "boolean",
+                    "example": true
+                },
+                "number": {
+                    "type": "integer",
+                    "format": "integer",
+                    "example": 1234
+                },
+                "origin": {
+                    "type": "string",
+                    "format": "string",
+                    "example": "New York"
+                },
+                "passenger_cpf": {
+                    "type": "string",
+                    "format": "string",
+                    "example": "123.456.789-00"
+                },
+                "passenger_name": {
+                    "type": "string",
+                    "format": "string",
+                    "example": "John Doe"
+                },
+                "seat_number": {
+                    "type": "string",
+                    "format": "string",
+                    "example": "A1"
+                }
+            }
+        }
+    }
+}

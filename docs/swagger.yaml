@@ -1,0 +1,923 @@
+basePath: /
+definitions:
+  github_com_krymancer_airport-api-go_pkg_common_models.Airport:
+    properties:
+      city_id:
+        type: integer
+      createdAt:
+        type: string
+      deletedAt:
+        $ref: '#/definitions/gorm.DeletedAt'
+      iata_code:
+        type: string
+      id:
+        type: integer
+      name:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+  github_com_krymancer_airport-api-go_pkg_common_models.City:
+    properties:
+      airports:
+        items:
+          $ref: '#/definitions/github_com_krymancer_airport-api-go_pkg_common_models.Airport'
+        type: array
+      createdAt:
+        type: string
+      deletedAt:
+        $ref: '#/definitions/gorm.DeletedAt'
+      id:
+        type: integer
+      name:
+        type: string
+      state:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+  github_com_krymancer_airport-api-go_pkg_common_models.Flight:
+    properties:
+      arrival:
+        type: string
+      createdAt:
+        type: string
+      deletedAt:
+        $ref: '#/definitions/gorm.DeletedAt'
+      departure:
+        type: string
+      destination_id:
+        type: integer
+      flight_class:
+        items:
+          $ref: '#/definitions/github_com_krymancer_airport-api-go_pkg_common_models.FlightClass'
+        type: array
+      id:
+        type: integer
+      number:
+        type: integer
+      origin_id:
+        type: integer
+      tickets:
+        items:
+          $ref: '#/definitions/github_com_krymancer_airport-api-go_pkg_common_models.Ticket'
+        type: array
+      updatedAt:
+        type: string
+    type: object
+  github_com_krymancer_airport-api-go_pkg_common_models.FlightClass:
+    properties:
+      createdAt:
+        type: string
+      deletedAt:
+        $ref: '#/definitions/gorm.DeletedAt'
+      flight_id:
+        type: integer
+      id:
+        type: integer
+      name:
+        type: string
+      number_of_seats:
+        type: integer
+      price_per_seat:
+        type: number
+      type:
+        type: integer
+      updatedAt:
+        type: string
+    type: object
+  github_com_krymancer_airport-api-go_pkg_common_models.Lugagge:
+    properties:
+      createdAt:
+        type: string
+      deletedAt:
+        $ref: '#/definitions/gorm.DeletedAt'
+      id:
+        type: integer
+      number:
+        type: integer
+      ticket_id:
+        type: integer
+      updatedAt:
+        type: string
+    type: object
+  github_com_krymancer_airport-api-go_pkg_common_models.Ticket:
+    properties:
+      createdAt:
+        type: string
+      deletedAt:
+        $ref: '#/definitions/gorm.DeletedAt'
+      flight:
+        type: integer
+      id:
+        type: integer
+      lugagge:
+        items:
+          $ref: '#/definitions/github_com_krymancer_airport-api-go_pkg_common_models.Lugagge'
+        type: array
+      number:
+        type: integer
+      passenger_id:
+        type: integer
+      seat_number:
+        type: string
+      updatedAt:
+        type: string
+      visitor_id:
+        type: integer
+    type: object
+  gorm.DeletedAt:
+    properties:
+      time:
+        type: string
+      valid:
+        description: Valid is true if Time is not NULL
+        type: boolean
+    type: object
+  handlers_airports.AddAirportRequestBody:
+    properties:
+      city_id:
+        example: 1
+        format: integer
+        type: integer
+      iata_code:
+        example: JFK
+        format: string
+        type: string
+      name:
+        example: John F. Kennedy International Airport
+        format: string
+        type: string
+    type: object
+  handlers_airports.UpdateAirportRequestBody:
+    properties:
+      city_id:
+        example: 1
+        format: integer
+        type: integer
+      iata_code:
+        example: JFK
+        format: string
+        type: string
+      name:
+        example: John F. Kennedy International Airport
+        format: string
+        type: string
+    type: object
+  handlers_cities.AddCityBodyRequest:
+    properties:
+      name:
+        example: New York
+        format: string
+        type: string
+      state:
+        example: NY
+        format: string
+        type: string
+    type: object
+  handlers_flights.UpdateFlightBodyRequest:
+    properties:
+      destination_id:
+        example: 2
+        format: integer
+        type: integer
+      flight_classes:
+        items:
+          $ref: '#/definitions/github_com_krymancer_airport-api-go_pkg_common_models.FlightClass'
+        type: array
+      number:
+        example: FA123
+        format: string
+        type: string
+      origin_id:
+        example: 1
+        format: integer
+        type: integer
+    required:
+    - destination_id
+    - flight_classes
+    - number
+    - origin_id
+    type: object
+  handlers_flights.UpdateFlightClassBodyRequest:
+    properties:
+      price:
+        example: 100.5
+        format: float
+        type: number
+    required:
+    - price
+    type: object
+  handlers_tickets.AddTicketBodyRequest:
+    properties:
+      flight:
+        example: 123
+        format: integer
+        type: integer
+      lugagge:
+        items:
+          $ref: '#/definitions/github_com_krymancer_airport-api-go_pkg_common_models.Lugagge'
+        type: array
+      number:
+        example: 1
+        format: integer
+        type: integer
+      passenger:
+        example: 456
+        format: integer
+        type: integer
+      seat_number:
+        example: A1
+        format: string
+        type: string
+    type: object
+  handlers_tickets.UpdateTicketBodyRequest:
+    properties:
+      flight:
+        example: 123
+        format: integer
+        type: integer
+      lugagge:
+        items:
+          $ref: '#/definitions/github_com_krymancer_airport-api-go_pkg_common_models.Lugagge'
+        type: array
+      number:
+        example: 1
+        format: integer
+        type: integer
+      passenger:
+        example: 456
+        format: integer
+        type: integer
+      seat_number:
+        example: A1
+        format: string
+        type: string
+    type: object
+  handlers_tickets.Voucher:
+    properties:
+      destination:
+        example: Los Angeles
+        format: string
+        type: string
+      flight_number:
+        example: 5678
+        format: integer
+        type: integer
+      luggage_checked:
+        example: true
+        type: boolean
+      number:
+        example: 1234
+        format: integer
+        type: integer
+      origin:
+        example: New York
+        format: string
+        type: string
+      passenger_cpf:
+        example: 123.456.789-00
+        format: string
+        type: string
+      passenger_name:
+        example: John Doe
+        format: string
+        type: string
+      seat_number:
+        example: A1
+        format: string
+        type: string
+    type: object
+host: localhost:3000
+info:
+  contact: {}
+  description: This implements the Airport API Reference.
+  termsOfService: http://swagger.io/terms/
+  title: Airport API
+  version: "1.0"
+paths:
+  /airports:
+    get:
+      consumes:
+      - application/json
+      description: Get a list of all airports
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully retrieved all airports
+          schema:
+            items:
+              $ref: '#/definitions/github_com_krymancer_airport-api-go_pkg_common_models.Airport'
+            type: array
+        "404":
+          description: Not Found
+          schema: {}
+      summary: Get all airports
+      tags:
+      - Airports
+    post:
+      consumes:
+      - application/json
+      description: Add a new airport to the system
+      parameters:
+      - description: Airport details
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/handlers_airports.AddAirportRequestBody'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/github_com_krymancer_airport-api-go_pkg_common_models.Airport'
+        "400":
+          description: Bad Request
+          schema: {}
+        "404":
+          description: Not Found
+          schema: {}
+      summary: Add a new airport
+      tags:
+      - Airports
+  /airports/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete an airport from the system using its ID
+      parameters:
+      - description: Airport ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: integer
+        "404":
+          description: Not Found
+          schema: {}
+      summary: Delete an airport
+      tags:
+      - Airports
+    get:
+      consumes:
+      - application/json
+      description: Get details of an airport using its ID
+      parameters:
+      - description: Airport ID
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully retrieved airport
+          schema:
+            $ref: '#/definitions/github_com_krymancer_airport-api-go_pkg_common_models.Airport'
+        "404":
+          description: Not Found
+          schema: {}
+      summary: Get an airport
+      tags:
+      - Airports
+    put:
+      consumes:
+      - application/json
+      description: Update information of an airport given its ID
+      parameters:
+      - description: Airport ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Body with updated information
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/handlers_airports.UpdateAirportRequestBody'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully updated airport information
+          schema:
+            $ref: '#/definitions/github_com_krymancer_airport-api-go_pkg_common_models.Airport'
+        "400":
+          description: Bad Request - Invalid or missing parameters
+          schema: {}
+        "404":
+          description: Not Found
+          schema: {}
+      summary: Update airport
+      tags:
+      - Airports
+  /cities:
+    get:
+      consumes:
+      - application/json
+      description: Get the list of all cities from the database.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully retrieved all cities
+          schema:
+            items:
+              $ref: '#/definitions/github_com_krymancer_airport-api-go_pkg_common_models.City'
+            type: array
+        "404":
+          description: No cities found
+          schema: {}
+      summary: Retrieve all cities
+      tags:
+      - Cities
+    post:
+      consumes:
+      - application/json
+      description: Add a new city to the database.
+      parameters:
+      - description: City details
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/handlers_cities.AddCityBodyRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created city object
+          schema:
+            $ref: '#/definitions/github_com_krymancer_airport-api-go_pkg_common_models.City'
+        "400":
+          description: Bad request, JSON decoding failed
+          schema: {}
+        "404":
+          description: Internal server error when saving the city into the database
+          schema: {}
+      summary: Add a new city
+      tags:
+      - Cities
+  /cities/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a city from the database.
+      parameters:
+      - description: City ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: City successfully deleted
+          schema: {}
+        "404":
+          description: City not found
+          schema: {}
+      summary: Delete a city
+      tags:
+      - Cities
+    get:
+      consumes:
+      - application/json
+      description: Get a specific city from the database by its ID.
+      parameters:
+      - description: City ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully retrieved the city
+          schema:
+            $ref: '#/definitions/github_com_krymancer_airport-api-go_pkg_common_models.City'
+        "404":
+          description: City not found
+          schema: {}
+      summary: Retrieve a city by ID
+      tags:
+      - Cities
+    put:
+      consumes:
+      - application/json
+      description: Update the details of a specific city in the database by its ID.
+      parameters:
+      - description: City ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Name of the city
+        in: body
+        name: name
+        schema:
+          type: string
+      - description: State of the city
+        in: body
+        name: state
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully updated the city
+          schema:
+            $ref: '#/definitions/github_com_krymancer_airport-api-go_pkg_common_models.City'
+        "400":
+          description: Invalid request body
+          schema: {}
+        "404":
+          description: City not found
+          schema: {}
+      summary: Update a city's details
+      tags:
+      - Cities
+  /flights:
+    get:
+      consumes:
+      - application/json
+      description: Retrieves all flight records from the database.
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully retrieved all flights
+          schema:
+            items:
+              $ref: '#/definitions/github_com_krymancer_airport-api-go_pkg_common_models.Flight'
+            type: array
+        "404":
+          description: No flights found
+          schema: {}
+      summary: Get all flights
+      tags:
+      - Flights
+    post:
+      consumes:
+      - application/json
+      description: Add a new flight into the database.
+      parameters:
+      - description: ID of the origin airport
+        in: body
+        name: origin_id
+        required: true
+        schema:
+          type: integer
+      - description: ID of the destination airport
+        in: body
+        name: destination_id
+        required: true
+        schema:
+          type: integer
+      - description: Array of flight classes. Each element is a FlightClass object.
+        in: body
+        name: flight_classes
+        required: true
+        schema:
+          type: array
+      - description: Flight number
+        in: body
+        name: number
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Successfully added the flight
+          schema:
+            $ref: '#/definitions/github_com_krymancer_airport-api-go_pkg_common_models.Flight'
+        "400":
+          description: Invalid request body
+          schema: {}
+        "404":
+          description: Origin/Destination airport not found
+          schema: {}
+        "409":
+          description: Flight number conflict
+          schema: {}
+      summary: Add a new flight
+      tags:
+      - Flights
+  /flights/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Deletes a flight record from the database based on the provided
+        ID.
+      parameters:
+      - description: Flight ID to delete
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully deleted flight
+          schema:
+            $ref: '#/definitions/github_com_krymancer_airport-api-go_pkg_common_models.Flight'
+      summary: Delete a flight
+      tags:
+      - Flights
+    get:
+      consumes:
+      - application/json
+      description: Retrieves a flight record from the database based on the provided
+        ID.
+      parameters:
+      - description: Flight ID to get
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully retrieved flight
+          schema:
+            $ref: '#/definitions/github_com_krymancer_airport-api-go_pkg_common_models.Flight'
+        "404":
+          description: Flight not found
+          schema: {}
+      summary: Get a flight
+      tags:
+      - Flights
+    put:
+      consumes:
+      - application/json
+      description: Updates a flight record with the provided data.
+      parameters:
+      - description: Flight ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Body object
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/handlers_flights.UpdateFlightBodyRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully updated flight
+          schema:
+            $ref: '#/definitions/github_com_krymancer_airport-api-go_pkg_common_models.Flight'
+        "400":
+          description: Bad Request
+          schema: {}
+        "404":
+          description: Flight Not Found
+          schema: {}
+        "409":
+          description: Conflict with existing flight number
+          schema: {}
+      summary: Update a flight
+      tags:
+      - Flights
+  /flights/{number}/{class}:
+    put:
+      consumes:
+      - application/json
+      description: Updates the price of a flight class with the provided data.
+      parameters:
+      - description: Flight Number
+        in: path
+        name: number
+        required: true
+        type: string
+      - description: Flight Class
+        in: path
+        name: class
+        required: true
+        type: string
+      - description: Body object
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/handlers_flights.UpdateFlightClassBodyRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully updated flight class price
+          schema:
+            $ref: '#/definitions/github_com_krymancer_airport-api-go_pkg_common_models.Flight'
+        "400":
+          description: Bad Request
+          schema: {}
+        "404":
+          description: Flight or Flight Class Not Found
+          schema: {}
+      summary: Update a flight class price
+      tags:
+      - Flights
+  /luggageLabel/{number}:
+    get:
+      consumes:
+      - application/json
+      description: Get the luggage label for a specific ticket by number
+      parameters:
+      - description: Ticket number
+        in: path
+        name: number
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully retrieved luggage label
+          schema:
+            items:
+              $ref: '#/definitions/github_com_krymancer_airport-api-go_pkg_common_models.Lugagge'
+            type: array
+        "404":
+          description: Not Found
+          schema: {}
+      summary: Retrieve a ticket's luggage label
+      tags:
+      - Lugagges
+  /tickets:
+    get:
+      consumes:
+      - application/json
+      description: get all tickets
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/github_com_krymancer_airport-api-go_pkg_common_models.Ticket'
+            type: array
+        "404":
+          description: No tickets found
+          schema: {}
+      summary: Get all tickets
+      tags:
+      - Tickets
+    post:
+      consumes:
+      - application/json
+      description: Add a new ticket with the provided details
+      parameters:
+      - description: Add a new ticket
+        in: body
+        name: AddTicketBodyRequest
+        required: true
+        schema:
+          $ref: '#/definitions/handlers_tickets.AddTicketBodyRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Successfully created a new ticket
+          schema:
+            $ref: '#/definitions/github_com_krymancer_airport-api-go_pkg_common_models.Ticket'
+        "400":
+          description: Bad Request
+          schema: {}
+        "404":
+          description: Not Found
+          schema: {}
+        "409":
+          description: Conflict
+          schema: {}
+      summary: Add a new ticket
+      tags:
+      - Tickets
+  /tickets/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a ticket by its ID
+      parameters:
+      - description: Ticket ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully deleted a ticket
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema: {}
+      summary: Delete a ticket
+      tags:
+      - Tickets
+    put:
+      consumes:
+      - application/json
+      description: update ticket by ID
+      parameters:
+      - description: Ticket ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      - description: Ticket details to be updated
+        in: body
+        name: body
+        required: true
+        schema:
+          $ref: '#/definitions/handlers_tickets.UpdateTicketBodyRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/github_com_krymancer_airport-api-go_pkg_common_models.Ticket'
+        "400":
+          description: Bad Request
+          schema: {}
+        "404":
+          description: Not Found
+          schema: {}
+      summary: Update a ticket
+      tags:
+      - Tickets
+  /tickets/cpf/{cpf}:
+    get:
+      consumes:
+      - application/json
+      description: get tickets by passenger's CPF
+      parameters:
+      - description: CPF
+        in: path
+        name: cpf
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/github_com_krymancer_airport-api-go_pkg_common_models.Ticket'
+            type: array
+        "404":
+          description: No tickets found
+          schema: {}
+      summary: Get tickets by CPF
+      tags:
+      - Tickets
+  /voucher/{number}:
+    get:
+      consumes:
+      - application/json
+      description: Get the voucher details for a specific ticket by number
+      parameters:
+      - description: Ticket number
+        in: path
+        name: number
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Successfully retrieved voucher
+          schema:
+            $ref: '#/definitions/handlers_tickets.Voucher'
+        "404":
+          description: Not Found
+          schema: {}
+      summary: Retrieve a ticket voucher
+      tags:
+      - Vouchers
+swagger: "2.0"

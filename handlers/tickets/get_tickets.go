@@ -8,6 +8,14 @@ import (
 	"github.com/krymancer/airport-api-go/pkg/common/models"
 )
 
+// @Summary Get all tickets
+// @Description get all tickets
+// @Tags Tickets
+// @Accept  json
+// @Produce  json
+// @Success 200 {array} models.Ticket
+// @Failure 404 {object} error "No tickets found"
+// @Router /tickets [get]
 func (h handler) GetTickets(c *gin.Context) {
 
 	var tickets []models.Ticket
@@ -40,6 +48,16 @@ func (h handler) GetTicketsByFlight(c *gin.Context) {
 	c.JSON(http.StatusOK, &tickets)
 }
 
+// GetTicketsByCPF godoc
+// @Summary Get tickets by CPF
+// @Description get tickets by passenger's CPF
+// @Tags Tickets
+// @Accept  json
+// @Produce  json
+// @Param cpf path string true "CPF"
+// @Success 200 {array} models.Ticket
+// @Failure 404 {object} error "No tickets found"
+// @Router /tickets/cpf/{cpf} [get]
 func (h handler) GetTicketsByCPF(c *gin.Context) {
 	cpf := c.Param("cpf")
 

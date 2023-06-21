@@ -7,6 +7,14 @@ import (
 	"github.com/krymancer/airport-api-go/pkg/common/models"
 )
 
+// @Summary Delete a flight
+// @Description Deletes a flight record from the database based on the provided ID.
+// @Tags Flights
+// @Accept  json
+// @Produce  json
+// @Param id path int true "Flight ID to delete"
+// @Success 200 {object} models.Flight "Successfully deleted flight"
+// @Router /flights/{id} [delete]
 func (h handler) DeleteFlight(c *gin.Context) {
 	id := c.Param("id")
 

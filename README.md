@@ -19,6 +19,20 @@ or
 make server
 ```
 
+## Generating the swagger documentation
+
+To generate the swagger documentation you need to have [swag](https://github.com/swaggo/swag) installed in your system. You can install it with the following command:
+
+```bash
+go get -u github.com/swaggo/swag/cmd/swag
+```
+
+Once you have swag installed, you can generate the swagger documentation with the following command:
+
+```bash
+swag init --parseDependency --parseInternal -g cmd/main.go
+```
+
 ## Technology stack
 
 The API is implemented in Go using the [Gin](github.com/gin-gonic/gin) framework, uses [PostgreSQL](https://www.postgresql.org/) and [Gorm](https://gorm.io/) for database and ORM and uses [Viper](https://github.com/spf13/viper) to manage environment variables.

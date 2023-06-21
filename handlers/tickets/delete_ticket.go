@@ -7,6 +7,16 @@ import (
 	"github.com/krymancer/airport-api-go/pkg/common/models"
 )
 
+// DeleteTicket godoc
+// @Summary Delete a ticket
+// @Description Delete a ticket by its ID
+// @Tags Tickets
+// @Accept  json
+// @Produce  json
+// @Param id path int true "Ticket ID"
+// @Success 200 {string} string "Successfully deleted a ticket"
+// @Failure 404 {object} error "Not Found"
+// @Router /tickets/{id} [delete]
 func (h handler) DeleteTicket(c *gin.Context) {
 	id := c.Param("id")
 

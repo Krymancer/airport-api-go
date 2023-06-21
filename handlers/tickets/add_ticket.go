@@ -8,13 +8,25 @@ import (
 )
 
 type AddTicketBodyRequest struct {
-	Number      int              `json:"number"`
-	SeatNumber  string           `json:"seat_number"`
-	Lugagge     []models.Lugagge `json:"lugagge"`
-	FlightID    uint             `json:"flight"`
-	PassengerID uint             `json:"passenger"`
+	Number      int              `json:"number" example:"1" format:"integer" description:"The unique number of the ticket"`
+	SeatNumber  string           `json:"seat_number" example:"A1" format:"string" description:"The number of the seat on the flight"`
+	Lugagge     []models.Lugagge `json:"lugagge" description:"Array of luggage items associated with the ticket"`
+	FlightID    uint             `json:"flight" example:"123" format:"integer" description:"The ID of the flight associated with the ticket"`
+	PassengerID uint             `json:"passenger" example:"456" format:"integer" description:"The ID of the passenger to whom the ticket is issued"`
 }
 
+// AddTicket godoc
+// @Summary Add a new ticket
+// @Description Add a new ticket with the provided details
+// @Tags Tickets
+// @Accept  json
+// @Produce  json
+// @Param AddTicketBodyRequest body AddTicketBodyRequest true "Add a new ticket"
+// @Success 201 {object} models.Ticket "Successfully created a new ticket"
+// @Failure 400 {object} error "Bad Request"
+// @Failure 404 {object} error "Not Found"
+// @Failure 409 {object} error "Conflict"
+// @Router /tickets [post]
 func (h handler) AddTicket(c *gin.Context) {
 	body := AddTicketBodyRequest{}
 

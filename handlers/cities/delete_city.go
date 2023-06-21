@@ -7,6 +7,15 @@ import (
 	"github.com/krymancer/airport-api-go/pkg/common/models"
 )
 
+// @Summary Delete a city
+// @Description Delete a city from the database.
+// @Tags Cities
+// @Accept  json
+// @Produce  json
+// @Param   id path int true "City ID"
+// @Success 200 {object} error "City successfully deleted"
+// @Failure 404 {object} error "City not found"
+// @Router /cities/{id} [delete]
 func (h handler) DeleteCity(c *gin.Context) {
 	id := c.Param("id")
 

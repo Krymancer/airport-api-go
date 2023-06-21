@@ -9,12 +9,24 @@ import (
 )
 
 type UpdateFlightBodyRequest struct {
-	OriginID      uint                 `json:"origin_id" binding:"required"`
-	DestinationID uint                 `json:"destination_id" binding:"required"`
-	FlightClasses []models.FlightClass `json:"flight_classes" binding:"required"`
-	Number        string               `json:"number" binding:"required"`
+	OriginID      uint                 `json:"origin_id" binding:"required" example:"1" format:"integer" description:"ID of the origin airport"`
+	DestinationID uint                 `json:"destination_id" binding:"required" example:"2" format:"integer" description:"ID of the destination airport"`
+	FlightClasses []models.FlightClass `json:"flight_classes" binding:"required" description:"Array of Flight Classes"`
+	Number        string               `json:"number" binding:"required" example:"FA123" format:"string" description:"The flight number"`
 }
 
+// @Summary Update a flight
+// @Description Updates a flight record with the provided data.
+// @Tags Flights
+// @Accept  json
+// @Produce  json
+// @Param   id     path    int     true        "Flight ID"
+// @Param   body   body    UpdateFlightBodyRequest  true "Body object"
+// @Success 200 {object} models.Flight "Successfully updated flight"
+// @Failure 400 {object} error "Bad Request"
+// @Failure 404 {object} error "Flight Not Found"
+// @Failure 409 {object} error "Conflict with existing flight number"
+// @Router /flights/{id} [put]
 func (h handler) UpdateFlight(c *gin.Context) {
 	id := c.Param("id")
 	body := UpdateFlightBodyRequest{}
@@ -72,9 +84,21 @@ func (h handler) UpdateFlight(c *gin.Context) {
 }
 
 type UpdateFlightClassBodyRequest struct {
-	Price float64 `json:"price" binding:"required"`
+	Price float64 `json:"price" example:"100.50" format:"float" description:"Price per seat for the flight class" binding:"required"`
 }
 
+// @Summary Update a flight class price
+// @Description Updates the price of a flight class with the provided data.
+// @Tags Flights
+// @Accept  json
+// @Produce  json
+// @Param   number     path    string     true        "Flight Number"
+// @Param   class      path    string     true        "Flight Class"
+// @Param   body       body    UpdateFlightClassBodyRequest  true "Body object"
+// @Success 200 {object} models.Flight "Successfully updated flight class price"
+// @Failure 400 {object} error "Bad Request"
+// @Failure 404 {object} error "Flight or Flight Class Not Found"
+// @Router /flights/{number}/{class} [put]
 func (h handler) UpdateClassPrice(c *gin.Context) {
 	number := c.Param("number")
 	class := c.Param("class")

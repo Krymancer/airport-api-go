@@ -9,12 +9,26 @@ import (
 )
 
 type AddFlightBodyRequest struct {
-	OriginID      uint                 `json:"origin_id" binding:"required"`
-	DestinationID uint                 `json:"destination_id" binding:"required"`
-	FlightClasses []models.FlightClass `json:"flight_classes" binding:"required"`
-	Number        string               `json:"number" binding:"required"`
+	OriginID      uint                 `json:"origin_id" binding:"required" example:"1" format:"integer" description:"ID of the origin airport"`
+	DestinationID uint                 `json:"destination_id" binding:"required" example:"2" format:"integer" description:"ID of the destination airport"`
+	FlightClasses []models.FlightClass `json:"flight_classes" binding:"required" description:"Array of Flight Classes"`
+	Number        string               `json:"number" binding:"required" example:"FA123" format:"string" description:"The flight number"`
 }
 
+// @Summary Add a new flight
+// @Description Add a new flight into the database.
+// @Tags Flights
+// @Accept  json
+// @Produce  json
+// @Param origin_id body uint true "ID of the origin airport"
+// @Param destination_id body uint true "ID of the destination airport"
+// @Param flight_classes body array true "Array of flight classes. Each element is a FlightClass object."
+// @Param number body string true "Flight number"
+// @Success 201 {object} models.Flight "Successfully added the flight"
+// @Failure 400 {object} error "Invalid request body"
+// @Failure 404 {object} error "Origin/Destination airport not found"
+// @Failure 409 {object} error "Flight number conflict"
+// @Router /flights [post]
 func (h handler) AddFlight(c *gin.Context) {
 	body := AddFlightBodyRequest{}
 
